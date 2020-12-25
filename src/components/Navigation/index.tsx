@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //material ui components
 import clsx from 'clsx';
@@ -19,6 +19,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
+import { Box, Button } from '@material-ui/core';
 
 
 const drawerWidth = 240;
@@ -84,6 +85,14 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       padding: theme.spacing(3),
     },
+    authButtonGroup:{
+        flex: 1,
+    textAlign: "end"
+    },
+    authButtonTexStyles:{
+        color:'#fff',
+        fontWeight:500
+    }
   }),
 );
 
@@ -99,6 +108,10 @@ export default function Navigation(props:any) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+ const handleAuth = (type:string) => {
+    window.location.replace(type)
+ }
 
   return (
 
@@ -125,6 +138,18 @@ export default function Navigation(props:any) {
           <Typography variant="h6" noWrap>
             Boilerplate
           </Typography>
+          <Box className={classes.authButtonGroup}>
+
+          <Button onClick={()=>handleAuth('login')}
+          >
+              <Typography variant="body1" className={classes.authButtonTexStyles}>Login</Typography>
+          </Button>
+          <Button
+          onClick={()=>handleAuth('register')}
+          >
+          <Typography variant="body1" className={classes.authButtonTexStyles}>Register</Typography>
+          </Button>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer

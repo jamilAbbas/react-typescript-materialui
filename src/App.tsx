@@ -92,8 +92,8 @@ export default function App() {
          <main className={classes.content}>
         <div className={classes.toolbar} />
               <Switch>
-                <Route path="/profile" exact children={<Profile/>}/>
-                <Route path="/dashboard" exact children={<Dashboard/>}/>
+                <Route path="/profile" exact component={Profile}/>
+                <Route path="/dashboard" exact component={Dashboard}/>
               </Switch>
        </main>
        </Navigation>
