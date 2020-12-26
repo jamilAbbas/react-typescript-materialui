@@ -85,21 +85,22 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       padding: theme.spacing(3),
     },
-    authButtonGroup:{
-        flex: 1,
-    textAlign: "end"
+    authButtonGroup: {
+      flex: 1,
+      textAlign: "end"
     },
-    authButtonTexStyles:{
-        color:'#fff',
-        fontWeight:500
+    authButtonTexStyles: {
+      color: '#fff',
+      fontWeight: 500
     }
   }),
 );
 
-export default function Navigation(props:any) {
+export default function Navigation(props: any) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [selectedListItem, setSelectedListItem] = React.useState(1)
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -109,9 +110,13 @@ export default function Navigation(props:any) {
     setOpen(false);
   };
 
- const handleAuth = (type:string) => {
+  const handleAuth = (type: string) => {
     window.location.replace(type)
- }
+  }
+
+  const handleListItemClick: any = (e: Event, selectedListItem: any) => {
+    setSelectedListItem(selectedListItem);
+  }
 
   return (
 
@@ -140,15 +145,15 @@ export default function Navigation(props:any) {
           </Typography>
           <Box className={classes.authButtonGroup}>
 
-          <Button onClick={()=>handleAuth('login')}
-          >
+            <Button onClick={() => handleAuth('login')}
+            >
               <Typography variant="body1" className={classes.authButtonTexStyles}>Login</Typography>
-          </Button>
-          <Button
-          onClick={()=>handleAuth('register')}
-          >
-          <Typography variant="body1" className={classes.authButtonTexStyles}>Register</Typography>
-          </Button>
+            </Button>
+            <Button
+              onClick={() => handleAuth('register')}
+            >
+              <Typography variant="body1" className={classes.authButtonTexStyles}>Register</Typography>
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
@@ -172,25 +177,40 @@ export default function Navigation(props:any) {
         </div>
         <Divider />
         <List>
-            <ListItem button component={Link} to="/profile">
-              <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary={"Profile"} />
-            </ListItem>
-            <ListItem button component={Link} to="dashboard">
-              <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary={"Dashboard"} />
-            </ListItem>
-            <ListItem button component={Link} to="/setting">
-              <ListItemIcon><InboxIcon /></ListItemIcon>
-              <ListItemText primary={"Settings"} />
-            </ListItem>
+          <ListItem button component={Link} to="/profile"
+            selected={selectedListItem === 0}
+            onClick={(event: React.MouseEvent<HTMLElement>) => handleListItemClick(event, 0)}
+          >
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary={"Profile"} />
+          </ListItem>
+          <ListItem
+            button
+            component={Link} to="dashboard"
+            selected={selectedListItem === 1}
+
+            onClick={(event: React.MouseEvent<HTMLElement>) => handleListItemClick(event, 1)}
+          >
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary={"Dashboard"} />
+          </ListItem>
+          <ListItem button
+            component={Link}
+            to="/setting"
+            selected={selectedListItem === 2}
+            onClick={(event: React.MouseEvent<HTMLElement>) => handleListItemClick(event, 2)}
+
+          >
+            <ListItemIcon><InboxIcon /></ListItemIcon>
+            <ListItemText primary={"Settings"} />
+          </ListItem>
         </List>
         <Divider />
       </Drawer>
       <div>
-          {props.children}
+        {props.children}
       </div>
-  
+
     </div>
   );
 }
